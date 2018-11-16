@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Caveat');
+:root { 
+	/* COLORS FROM FLAT UI */
+	--navyBlue:	#34495e; 
+	--red: #eb4d4b;
+	--green: #badc58;
+	--greenlite:#DCEDC8;
+	--pink: #ff7979;
+	--white: #ecf0f1;
+};
+
+* {
+	box-sizing: border-box;
+	margin:0;
+	padding:0;
+}
+
+body {
+	font-family: Raleway, serif;
+	font-size: 2em;
+	background:#fff;
+}
+
+h1{
+	text-align: center;
+	background-color:rgba(0,0,0,0.3);
+	text-transform: uppercase;
+	font-weight: lighter;
+	font-size: 1.2em;
+}
+
+/* DIV CONTAINER */
+
+.container {
+	margin: 10px auto;
+    width: 550px;
+    padding: 10px;
+    background: var(--navyBlue);
+    color:var(--pink);
+    border-radius: 10px;
+    position: relative;
+}
+
+/* LABEL, INPUT + BUTTON INSIDE CONTAINER */
+.container label, input, button {
+	display: block;
+	width:100%;
+	border-radius: 25px;
+	outline: none;
+}
+
+.container input, button {
+	border:1px solid var(--red);
+}
+/* INPUT TAX, TOTAL */
+.container #tax, #total {
+	background: var(--pink);
+	color: var(--navyBlue);
+}
+
+/* INPUT */
+.container input {
+	font-size: 1em;
+	font-family: inherit;
+	margin:0;
+	text-indent: 20px;
+	background: var(--navyBlue);
+	color: var(--green);
+	transition: 0.2s all;
+}
+.container input:hover,
+.container input:focus {
+	border:2px solid var(--green);
+}
+::-webkit-input-placeholder {
+	font-size: 0.8em;
+	color:var(--green);
+	opacity: 0.6;
+}
+
+::moz-placeholder {
+	font-size: 0.8em;
+	color:var(--green);
+	opacity: 0.6;
+}
+
+/* ICONS */
+.i-container {
+	position: relative;
+	right:-90%;
+	bottom:39px;
+	color:var(--pink);
+	width:20px;
+}
+.i-container .fa-file-invoice-dollar {color: var(--white);}
+.i-container .fa-money-check-alt {color:var(--white);}
+
+/* BUTTON */
+.container button {
+	width: 50%;
+	padding: 8px;
+	border-radius: 50px;
+	margin:inherit;
+	background: var(--red);
+	color: var(--white);
+	font-size: 0.8em;
+	transition: 0.1s all;
+	box-shadow: 1px 5px var(--pink);
+}
+
+.container button:hover {
+	background:var(--navyBlue);
+	border-color: var(--pink);
+	color:var(--pink);
+	cursor: pointer;
+}
+.container button:active {
+	box-shadow: 0 5px var(--red);
+	transform: translateY(3px);
+}
+
+/* H3 */
+.container #output {
+	background:rgba(0,0,0,0.3);
+	padding: inherit;
+	margin: inherit;
+	text-align: center;
+	font-weight: lighter;
+}
+
+.container .true {color:var(--green);}
+
+.container .false {color:var(--pink);}
+
+/* RESIZE FOR SMALLER DEVICE */
+@media (max-width: 480px) {
+	.container, #output {
+		width: 80%;
+		padding:10px;
+	}
+	body {
+		font-family: Raleway, serif;
+		font-size: 1em;
+	}
+	.i-container {
+	position: relative;
+	right:-90%;
+	bottom:20px;
+	width:20px;
+}
+}
+
+/* RESIZE BETWEEN TABLET AND LAPTOP */ 
+
+@media (min-width: 768px) and (max-width: 1280px)  {
+	.container, #output {
+		width:80%;
+		padding: 50px;
+	}
+
+}
