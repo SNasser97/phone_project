@@ -2,13 +2,9 @@
 /*==================== TAX/TAXOUTPUT =====================*/
 const taxOutput = document.querySelector('#tax');
 /*=========== BALANCE/SPDLIMIT/PHONEPRC/ACCPRC ===========*/
-let balance = document.querySelector('#balance');
-let spendLimit = document.querySelector('#spend-limit');
-let phonePrice = document.querySelector('#phone-price');
-let accessoryPrice = document.querySelector('#acc-price');
 /*===================== TOTAL/OUTPUT =====================*/
-const totalOutput = document.querySelector('#total');
-let output = document.querySelector('#output');
+//const totalOutput = document.querySelector('#total');
+//let output = document.querySelector('#output');
 /*======================= EVENTS =========================*/
 const calcBtn = document.querySelector('#calc-price');
 const resetBtn = document.querySelector('#reset');
@@ -19,29 +15,30 @@ const resetBtn = document.querySelector('#reset');
 
 /*===================== GET VALUES =======================*/
 function getBalance() { //give value to number
+  const balance = document.querySelector('#balance');
   return Number(balance.value);
 }
 
 function getSpendLmt() {
+  const spendLimit = document.querySelector('#spend-limit');
   return Number(spendLimit.value);
 }
 
 function getPhonePrice() {
+  const phonePrice = document.querySelector('#phone-price');
   return Number(phonePrice.value);
 }
 
 function getAccPrice() {
+  const accessoryPrice = document.querySelector('#acc-price');
   return Number(accessoryPrice.value);
 }
 
 function getAmount() {
-  let amount = 0;
+  const amount = 0;
   return amount;
 }
 
-function getOutput() {
-  return output.textContent;
-}
 /*===================== CONDITIONAL =======================*/
 
 function addAccPrice() {
@@ -71,33 +68,51 @@ function tax() {
   return TAX_RATE;
 }
 
-function reset() {
-  balance.value = 0;
-  spendLimit.value = 0;
-  phonePrice.value = 0;
-  accessoryPrice.value = 0;
-  output.textContent = '£';
-}
-
 /*===================== CHECK INPUT =======================*/
-function isInputValid(a,b,c,) { //sep func
-  if(isNaN(a) || isNaN(b) || isNaN(c)) { //if NaN then true
+function isInputValid(a,b,c,d,) { //balance | spendLimit | phonePrc | AccPrc
+  if(isNaN(a) || isNaN(b) || isNaN(c) && a === 0 || b === 0 || c === 0) { //if NaN and 0 then true
     return true;
-  }
+  } 
   return false;
 }
 
-function giveInput(a,b,c,) { //if input is NaN for amt/phone/accessory
-  if(isInputValid(getBalance(), getPhonePrice(), getAccPrice(),)) {
-    return output.textContent = 'Enter valid monies'; //this
+/*===================== CALCULATE =======================*/
+function giveOutput() { //if input is NaN for amt/phone/accessory
+  if(isInputValid(getBalance(), getSpendLmt() ,getPhonePrice(), getAccPrice(),)) {
+    return output.textContent = 'Error! Enter valid money';
   }
     return calc(); //then input is not NaN so call calc
 }
 
-output.textContent = '£' + parseFloat(0.00);
+/*===================== RESET VALUES =======================*/
+function reset() { 
+ balance.value = 0; //works, even though inside function
+ spendLimit.value = 0; //does not work, goes for rest except balance
+}
+
+function reset2() { //This works when I cache DOM in global
+  balance.value = 0;
+  spendLimit.value = 0;
+  phonePrice.value = 0;
+  accessoryPrice.value = 0;
+}
+console.log(getBalance()); //call works
+console.log('balance value logged', balance.value = 0); //this is defined
+
+console.log(getSpendLmt()); //call works
+console.log('spendLimit value logged', spendLimit.value = 0); //Ref error: not defined
+
+console.log(getPhonePrice()); //call works
+console.log('phonePrice value logged', phonePrice.value = 0); //Ref error: not defined
+
+console.log(getAccPrice()); //call works
+console.log('accessoryPrice value logged', accessoryPrice.value = 0); //Ref error: not defined
+
 taxOutput.setAttribute('value', tax());
-//calcBtn.addEventListener('click', calc);
-calcBtn.addEventListener('click', giveInput);
+calcBtn.addEventListener('click', giveOutput);
 resetBtn.addEventListener('click', reset);
+
+// output.textContent = '£' + parseFloat(0.00);
+//calcBtn.addEventListener('click', calc);
 
 //if value is number then change class of output to .true
