@@ -1,27 +1,24 @@
-/*----------------------DOM ELEMENTS----------------------*/
 /*==================== TAX/TAXOUTPUT =====================*/
 const taxOutput = document.querySelector('#tax');
-/*=========== BALANCE/SPDLIMIT/PHONEPRC/ACCPRC ===========*/
-/*===================== TOTAL/OUTPUT =====================*/
-//const totalOutput = document.querySelector('#total');
-//let output = document.querySelector('#output');
 /*======================= EVENTS =========================*/
 const calcBtn = document.querySelector('#calc-price');
 const resetBtn = document.querySelector('#reset');
-/*--------------------------------------------------------*/
+//--------------------------------------------------------*/
 
-// I know I went overboard with the comments, 
-// I'll remove them once this is complete
+/* 
+  NOTES: 
+  Remove unnecessary comments after
+*/
 
-/*===================== GET VALUES =======================*/
+/*===================== GET INPUT OF: =======================*/
 function getBalance() { //give value to number
-  const ba = document.querySelector('#bal');
-  return Number(ba.value);
+  const balance = document.querySelector('#balance');
+  return Number(balance.value);
 }
 
 function getSpendLmt() {
   const spendLimit = document.querySelector('#spend-limit');
-  return spendLimit.setAttribute('value',Number(spendLimit.value));
+  return Number(spendLimit.value);
 }
 
 function getPhonePrice() {
@@ -38,22 +35,9 @@ function getAmt() {
   let amount = 0;
   return amount;
 }
+//------------------------------------------------------------
 
-/*===================== CONDITIONAL =======================*/
-function addOnAcc(a,b) {
-  let amt = getAmt(); //0
-  return amt += a + b; //amt = 0 + phoneprc + accPrc
-}
-
-function calcAddOn() {
-  let amt = getAmt();
-  let addOnAcc = addOnAcc(getPhonePrice(), getAccPrice());
-  if(getPhonePrice() < getSpendLmt()) { // phone cheap than spendlmt then we add on accssry
-     return amt + addOnAcc;
-  }
-    return amt+=getPhonePrice(); //return just phoneprc
-}
-
+/*===================== CONDITIONAL LOOP =======================*/
 function keepBuyingPhone() {
   while (getBalance() > amt) {
     //we keep going till condition is false
@@ -62,6 +46,22 @@ function keepBuyingPhone() {
     }
      //balance = balance - amt;
   } 
+}
+//------------------------------------------------------------
+
+/*===================== CALCULATION =======================*/
+function addOnAcc(a,b) {
+  let amt = getAmt(); //0
+  return amt += a + b; //amt = 0 + phoneprc + accPrc
+}
+
+function checkForAccessory() {
+  let amt = getAmt();
+  let addOnAcc = addOnAcc(getPhonePrice(), getAccPrice());
+  if(getPhonePrice() < getSpendLmt()) { // phone cheap than spendlmt then we add on accssry
+     return amt + addOnAcc;
+  }
+    return amt+=getPhonePrice(); //return just phoneprc
 }
 
 function calc() { //+ can add as string, make sure its int
@@ -73,6 +73,7 @@ function tax() {
   const TAX_RATE = 0.1;
   return TAX_RATE;
 }
+//------------------------------------------------------------
 
 /*===================== CHECK INPUT =======================*/
 function isInputValid(a,b,c,d,) { //balance | spendLimit | phonePrc | AccPrc
@@ -81,6 +82,7 @@ function isInputValid(a,b,c,d,) { //balance | spendLimit | phonePrc | AccPrc
   } 
   return false;
 }
+//------------------------------------------------------------
 
 /*===================== OUTPUT/RESULT ======================*/
 function giveOutput() { //if input is NaN for amt/phone/accessory
@@ -93,32 +95,16 @@ function giveOutput() { //if input is NaN for amt/phone/accessory
   }
     return calc(); //then input is not NaN so call calc
 }
+//------------------------------------------------------------
 
 /*===================== RESET VALUES =======================*/
 function reset() { 
-  debugger;
- accessoryPrice.value = 0; //works, even though inside function
- //spendLimit.value = 0; //does not work, goes for rest except balance
+  balance.value = 0; //somehow input for balance is set to 0
+  spendLimit.value = 0; //does not work, goes for rest except balance
 }
+//------------------------------------------------------------
 
-// function reset2() { //This works when I cache DOM in global
-//   balance.value = 0;
-//   spendLimit.value = 0;
-//   phonePrice.value = 0;
-//   accessoryPrice.value = 0;
-// }
-// console.log(getBalance()); //call works
-// console.log('balance value logged', balance.value = 0); //this is defined
-
-// console.log(getSpendLmt()); //call works
-// console.log('spendLimit value logged', spendLimit.value = 0); //Ref error: not defined
-
-// console.log(getPhonePrice()); //call works
-// console.log('phonePrice value logged', phonePrice.value = 0); //Ref error: not defined
-
-// console.log(getAccPrice()); //call works
-// console.log('accessoryPrice value logged', accessoryPrice.value = 0); //Ref error: not defined
-
+/*===================== EVENT =======================*/
 taxOutput.setAttribute('value', tax());
 calcBtn.addEventListener('click', giveOutput);
 resetBtn.addEventListener('click', reset);
