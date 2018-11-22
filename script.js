@@ -17,17 +17,17 @@ function getBalance() { //give value to number
 }
 
 function getSpendLmt() {
-  const spendLimit = document.querySelector('#spend-limit');
+  const spendLimit = document.querySelector('#spendlimit');
   return Number(spendLimit.value);
 }
 
 function getPhonePrice() {
-  const phonePrice = document.querySelector('#phone-price');
+  const phonePrice = document.querySelector('#phoneprice');
   return Number(phonePrice.value);
 }
 
 function getAccPrice() {
-  const accessoryPrice = document.querySelector('#acc-price');
+  const accessoryPrice = document.querySelector('#accprice');
   return Number(accessoryPrice.value);
 }
 
@@ -59,7 +59,7 @@ function checkForAccessory() {
   let amt = getAmt();
   let addOnAcc = addOnAcc(getPhonePrice(), getAccPrice());
   if(getPhonePrice() < getSpendLmt()) { // phone cheap than spendlmt then we add on accssry
-     return amt + addOnAcc;
+     return amt += addOnAcc;
   }
     return amt+=getPhonePrice(); //return just phoneprc
 }
@@ -77,34 +77,45 @@ function tax() {
 
 /*===================== CHECK INPUT =======================*/
 function isInputValid(a,b,c,d,) { //balance | spendLimit | phonePrc | AccPrc
-  if(isNaN(a) || isNaN(b) || isNaN(c) && a === 0 || b === 0 || c === 0) { //if NaN and 0 then true
+  debugger;
+  if(isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d) && a === 0 || b === 0 || c === 0) { //if NaN and 0 then true
     return true;
-  } 
-  return false;
+  } else {
+    return false;
+  }
 }
 //------------------------------------------------------------
 
 /*===================== OUTPUT/RESULT ======================*/
 function giveOutput() { //if input is NaN for amt/phone/accessory
-  let bal = getBalance();
+  let balance = getBalance();
   let spendLimit = getSpendLmt();
   let phonePrice = getPhonePrice();
   let accPrice = getAccPrice();
-  if(isInputValid(bal, spendLimit ,phonePrice, accPrice,)) {
+  if(isInputValid(balance, spendLimit ,phonePrice, accPrice,)) {
     return output.textContent = 'Error! Enter valid money';
-  }
+  } // 
     return calc(); //then input is not NaN so call calc
 }
 //------------------------------------------------------------
 
 /*===================== RESET VALUES =======================*/
 function reset() { 
-  balance.value = 0; //somehow input for balance is set to 0
-  spendLimit.value = 0; //does not work, goes for rest except balance
+   //we're setting value from DOM itself
+   //since the cache are in their own func scope
+   //reason we can change the value is because DOM is global
+   //console.log(spendlimit); //id of DOM, not the cache in function getSpendLimit()
+   //so its spendlimit.value (accessible in global)
+   //while spendLimit.value is only in func
+  output.textContent ='';
+  balance.value = ''; //somehow input for balance is set to 0
+  spendlimit.value = ''; //does not work, goes for rest except balance
+  accprice.value = '';
+  phoneprice.value = '';
 }
 //------------------------------------------------------------
 
-/*===================== EVENT =======================*/
+/*===================== EVENT LISTENERS ======================*/
 taxOutput.setAttribute('value', tax());
 calcBtn.addEventListener('click', giveOutput);
 resetBtn.addEventListener('click', reset);
