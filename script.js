@@ -6,7 +6,7 @@ const taxOutput = document.querySelector('#tax');
 const calcBtn = document.querySelector('#calc-price');
 const resetBtn = document.querySelector('#reset');
 //--------------------------------------------------------*/
-let amt = 0;
+let amt = 0; //used for adding price on items etc.
 /* 
   NOTES: 
   Remove unnecessary comments after
@@ -71,7 +71,7 @@ function tax() {
 }
 //------------------------------------------------------------
 
-/*===================== CHECK INPUT =======================*/
+/*===================== CHECKS =======================*/
 function isInputValid(a,b,c,d) { //balance | spendLimit | phonePrc | AccPrc
   if(isNaN(a) || 
      isNaN(b) || 
@@ -86,8 +86,8 @@ function isInputValid(a,b,c,d) { //balance | spendLimit | phonePrc | AccPrc
   }
 }
 
-function checkSpendLmt() {
-  if(getSpendLmt() < getPhonePrice()) { //if spend limit less than phoneprc
+function checkSpendLmt(spendlimit, phoneprc) { 
+  if(spendlimit < phoneprc) { //if spend limit less than phoneprc
     return true; //too expensive
   } else {
     return false;
@@ -102,7 +102,7 @@ function giveOutput() { //if input is NaN for amt/phone/accessory
   let phonePrice = getPhonePrice();
   let accPrice = getAccPrice();
   
-  if(checkSpendLmt()) {
+  if(checkSpendLmt(getSpendLmt(), getPhonePrice())) {
     return output.textContent = 'Your budget is too low';
   }
 
