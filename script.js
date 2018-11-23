@@ -2,15 +2,11 @@
 const taxOutput = document.querySelector('#tax');
 //--------------------------------------------------------*/
 
-/*=====================  INPUT ===========================*/
-
-//--------------------------------------------------------*/
-
 /*======================= EVENTS =========================*/
 const calcBtn = document.querySelector('#calc-price');
 const resetBtn = document.querySelector('#reset');
 //--------------------------------------------------------*/
-
+let amt = 0;
 /* 
   NOTES: 
   Remove unnecessary comments after
@@ -36,11 +32,6 @@ function getAccPrice() {
   const accessoryPrice = document.querySelector('#accprice');
   return Number(accessoryPrice.value);
 }
-
-function getAmt() {
-  let amount = 0;
-  return amount;
-}
 //------------------------------------------------------------
 
 /*===================== CONDITIONAL LOOP =======================*/
@@ -57,17 +48,16 @@ function keepBuyingPhone() {
 
 /*===================== CALCULATION =======================*/
 function addOnAcc(a,b) {
-  let amt = getAmt(); //0
-  return amt += a + b; //amt = 0 + phoneprc + accPrc
+  return amt = amt + a + b; //amt = 0 + phoneprc + accPrc
 }
 
 function checkForAccessory() {
-  let amt = getAmt();
   let addOnAcc = addOnAcc(getPhonePrice(), getAccPrice());
   if(getPhonePrice() < getSpendLmt()) { // phone cheap than spendlmt then we add on accssry
-     return amt += addOnAcc;
+     return amt = amt + addOnAcc; //amt = 0 + func addOnAcc(a,b)
+  } else {
+    return amt = amt + getPhonePrice(); //return just phoneprc
   }
-    return amt+=getPhonePrice(); //return just phoneprc
 }
 
 function calc() { //+ can add as string, make sure its int
@@ -95,6 +85,14 @@ function isInputValid(a,b,c,d) { //balance | spendLimit | phonePrc | AccPrc
     return false;
   }
 }
+
+function checkSpendLmt() {
+  if(getSpendLmt() < getPhonePrice()) { //if spend limit less than phoneprc
+    return true; //too expensive
+  } else {
+    return false;
+  }
+}
 //------------------------------------------------------------
 
 /*===================== OUTPUT/RESULT ======================*/
@@ -103,6 +101,11 @@ function giveOutput() { //if input is NaN for amt/phone/accessory
   let spendLimit = getSpendLmt();
   let phonePrice = getPhonePrice();
   let accPrice = getAccPrice();
+  
+  if(checkSpendLmt()) {
+    return output.textContent = 'Your budget is too low';
+  }
+
   if(isInputValid(balance, spendLimit ,phonePrice, accPrice)) {
     return output.textContent = 'Error! Enter valid money';
   } // 
@@ -123,7 +126,8 @@ function clearInputs() {
   return clearVals;
 }
 
-function clearForm() {
+function clear() {
+  amt = 0;
   clearInputs();
   output.textContent = 'FORM RESET!';
 }
@@ -149,7 +153,7 @@ function reset() {
 /*===================== EVENT LISTENERS ======================*/
 taxOutput.textContent = tax();
 calcBtn.addEventListener('click', giveOutput);
-resetBtn.addEventListener('click', clearForm);
+resetBtn.addEventListener('click', clear);
 
 // output.textContent = '£' + parseFloat(0.00);
 // calcBtn.addEventListener('click', calc);
