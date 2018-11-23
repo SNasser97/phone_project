@@ -1,5 +1,11 @@
 /*==================== TAX/TAXOUTPUT =====================*/
 const taxOutput = document.querySelector('#tax');
+//--------------------------------------------------------*/
+
+/*=====================  INPUT ===========================*/
+
+//--------------------------------------------------------*/
+
 /*======================= EVENTS =========================*/
 const calcBtn = document.querySelector('#calc-price');
 const resetBtn = document.querySelector('#reset');
@@ -77,8 +83,13 @@ function tax() {
 
 /*===================== CHECK INPUT =======================*/
 function isInputValid(a,b,c,d) { //balance | spendLimit | phonePrc | AccPrc
-  debugger;
-  if(isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d) || a === 0 || b === 0 || c === 0) { //if a||b||c||d NaN OR 0 then true
+  if(isNaN(a) || 
+     isNaN(b) || 
+     isNaN(c) || 
+     isNaN(d) || 
+      a === 0 || 
+      b === 0 || 
+      c === 0) { //if a||b||c||d NaN OR 0 then true
     return true; 
   } else {
     return false;
@@ -99,7 +110,25 @@ function giveOutput() { //if input is NaN for amt/phone/accessory
 }
 //------------------------------------------------------------
 
-/*===================== RESET VALUES =======================*/
+/*===================== CLEAR VALUES =======================*/
+function inputLoop() {
+   const inputs = document.getElementsByTagName('input');
+   const listOfInputs = Array.from(inputs).map(arr => arr);
+   return listOfInputs;
+}
+
+function clearInputs() {
+  const values = inputLoop();
+  const clearVals = values.map(arr => arr.value = '');
+  return clearVals;
+}
+
+function clearForm() {
+  clearInputs();
+  output.textContent = 'FORM RESET!';
+}
+
+/*
 function reset() { 
    //we're setting value from DOM itself
    //since the cache are in their own func scope
@@ -113,12 +142,14 @@ function reset() {
   accprice.value = '';
   phoneprice.value = '';
 }
+*/
+
 //------------------------------------------------------------
 
 /*===================== EVENT LISTENERS ======================*/
-taxOutput.setAttribute('value', tax());
+taxOutput.textContent = tax();
 calcBtn.addEventListener('click', giveOutput);
-resetBtn.addEventListener('click', reset);
+resetBtn.addEventListener('click', clearForm);
 
 // output.textContent = '£' + parseFloat(0.00);
 // calcBtn.addEventListener('click', calc);
