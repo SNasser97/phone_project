@@ -76,10 +76,10 @@ function tax() {
 //------------------------------------------------------------
 
 /*===================== CHECK INPUT =======================*/
-function isInputValid(a,b,c,d,) { //balance | spendLimit | phonePrc | AccPrc
+function isInputValid(a,b,c,d) { //balance | spendLimit | phonePrc | AccPrc
   debugger;
-  if(isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d) && a === 0 || b === 0 || c === 0) { //if NaN and 0 then true
-    return true;
+  if(isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d) || a === 0 || b === 0 || c === 0) { //if a||b||c||d NaN OR 0 then true
+    return true; 
   } else {
     return false;
   }
@@ -92,7 +92,7 @@ function giveOutput() { //if input is NaN for amt/phone/accessory
   let spendLimit = getSpendLmt();
   let phonePrice = getPhonePrice();
   let accPrice = getAccPrice();
-  if(isInputValid(balance, spendLimit ,phonePrice, accPrice,)) {
+  if(isInputValid(balance, spendLimit ,phonePrice, accPrice)) {
     return output.textContent = 'Error! Enter valid money';
   } // 
     return calc(); //then input is not NaN so call calc
