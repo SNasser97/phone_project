@@ -6,63 +6,73 @@ const taxOutput = document.querySelector('#tax');
 const calcBtn = document.querySelector('#calc-price');
 const resetBtn = document.querySelector('#reset');
 //--------------------------------------------------------*/
+
 let amt = 0; //used for adding price on items etc.
+
 /* 
   NOTES: 
-  Remove unnecessary comments after
+    Work on calc()/calcTax() function
+    Add/use checkfunctions for while loop
+    Check function for adding accessory
+    Remove unnecessary comments after
 */
 
 /*===================== GET INPUT OF: =======================*/
 function getBalance() { //give value to number
   const balance = document.querySelector('#balance');
-  return Number(balance.value);
+  return Number(balance.value = 2000);
 }
 
 function getSpendLmt() {
   const spendLimit = document.querySelector('#spendlimit');
-  return Number(spendLimit.value);
+  return Number(spendLimit.value = 500);
 }
 
 function getPhonePrice() {
   const phonePrice = document.querySelector('#phoneprice');
-  return Number(phonePrice.value);
+  return Number(phonePrice.value = 160);
 }
 
 function getAccPrice() {
   const accessoryPrice = document.querySelector('#accprice');
-  return Number(accessoryPrice.value);
+  return Number(accessoryPrice.value = 10);
 }
 //------------------------------------------------------------
 
 /*===================== CONDITIONAL LOOP =======================*/
 function keepBuyingPhone() {
-  while (getBalance() > amt) {
-    //we keep going till condition is false
-    if(getBalance() < amt) {
-      //show no. of phones I can buy
-    }
-     //balance = balance - amt;
+  let balance = getBalance();
+  let amt = checkForAccessory();
+  // for(balance; balance > amt; balance= balance -amt) {
+  //     return output.textContent = "you can buy " + Number(amt % balance) + "phones!";
+  // }
+  while (balance > amt) {
+     return output.textContent = "you can buy " + Number(balance / amt).toFixed(0) + "phones!" + "at the price of " + amt.toFixed(2);
+     balance = balance - amt;
   } 
 }
 //------------------------------------------------------------
 
 /*===================== CALCULATION =======================*/
 function addOnAcc(a,b) {
-  return amt = amt + a + b; //amt = 0 + phoneprc + accPrc
+  return amt = a + b; //amt = 0 + phoneprc + accPrc
 }
 
 function checkForAccessory() {
-  let addOnAcc = addOnAcc(getPhonePrice(), getAccPrice());
-  if(getPhonePrice() < getSpendLmt()) { // phone cheap than spendlmt then we add on accssry
-     return amt = amt + addOnAcc; //amt = 0 + func addOnAcc(a,b)
+  let add = addOnAcc(getPhonePrice(), getAccPrice());
+  amt = getPhonePrice();
+  debugger;
+  if(amt < getSpendLmt()) { // phone cheap than spendlmt then we add on accssry
+     return amt = amt + add; //amt = 0 + func addOnAcc(a,b)
   } else {
     return amt = amt + getPhonePrice(); //return just phoneprc
   }
 }
 
-function calc() { //+ can add as string, make sure its int
-  let total = '£' + Number(getBalance() - (getPhonePrice() + getAccPrice()));
-  return output.textContent = total; 
+function calcTax(phonePrc,accPrc) { //+ can add as string, make sure its int
+  let total = '£' + Number((phonePrc + accPrc) * tax()) .toFixed(2);
+  console.log(total);
+  return total; 
 }
 
 function tax() {
@@ -93,6 +103,7 @@ function checkSpendLmt(spendlimit, phoneprc) {
     return false;
   }
 }
+
 //------------------------------------------------------------
 
 /*===================== OUTPUT/RESULT ======================*/
@@ -152,7 +163,7 @@ function reset() {
 
 /*===================== EVENT LISTENERS ======================*/
 taxOutput.textContent = tax();
-calcBtn.addEventListener('click', giveOutput);
+calcBtn.addEventListener('click', keepBuyingPhone);
 resetBtn.addEventListener('click', clear);
 
 // output.textContent = '£' + parseFloat(0.00);
