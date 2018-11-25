@@ -8,6 +8,9 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<!-- FONTAWESOME ALL, CDN -->
 	<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"> -->
+	<style type="text/css">
+		body {font-family:Arial, sans-serif;}
+	</style>
 </head>
 <body>
 	<div class="container">
@@ -15,23 +18,23 @@
 		<p>See how many phones you can buy!</p>
 		<!-- Balance -->
 		<label for='balance'>Enter balance</label>
-		<input id='balance' type="text" name="balance" placeholder="Enter balance">
+		<input id='balance' type="text" name="balance" placeholder="example 2000">
 		<!-- <div class="i-container"><i class="fas fa-pound-sign"></i></div> -->
 		<!-- Spending limit -->
-		<label for="spend-limit">Spending limit</label>
-		<input id='spend-limit' type="text" name="spend-limit" placeholder="Enter spending limit">
+		<label for="spendlimit">Spending limit</label>
+		<input id='spendlimit' type="text" name="spend-limit" placeholder="example 600">
 		<!-- <div class="i-container"><i class="fas fa-hand-holding-usd"></i></div> -->
 		<!-- Phone price -->
-		<label for='phone-price'>Phone price</label>
-		<input id='phone-price' type="text" name="phone-price" placeholder="Enter phone price">
+		<label for='phoneprice'>Phone price</label>
+		<input id='phoneprice' type="text" name="phone-price" placeholder="example 499.99">
 		<!-- <div class="i-container"><i class="fas fa-mobile-alt"></i></div> -->
 		<!-- Acesssory price -->
-		<label for='acc-price'>Accessory price</label>
-		<input id='acc-price' type="text" name="acc-price" placeholder="Enter accessory price">
+		<label for='accprice'>Accessory price</label>
+		<input id='accprice' type="text" name="acc-price" placeholder="example 9.99">
 		<!-- <div class="i-container"><i class="fas fa-headphones-alt"></i></div> -->
 		<!-- Tax -->
-		<label for='tax'>Tax Rate</label>
-		<input id='tax' type="text" name="tax" readonly>
+		<label>Tax Rate:</label>
+		<h3 id='tax'></h3>
 		<!-- <div class="i-container"><i class="fas fa-file-invoice-dollar"></i></div> -->
 		<!-- Total -->
 		<label>Output:</label>
