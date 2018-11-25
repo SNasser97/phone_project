@@ -43,7 +43,7 @@ function getAccPrice() {
 /*===================== CONDITIONAL LOOP =======================*/
 function keepBuyingPhone() {
   let balance = getBalance();
-  let amt = checkForAccessory();
+  let amt = checkForAccessory(); //value is phoneprice + amt OR just phoneprice
   while (balance > amt) {
      return output.textContent = calcSum(balance, amt); //output calcSum func
      balance = balance - amt; //subtract amt from balance each time
@@ -88,7 +88,7 @@ function isInputValid(a,b,c,d) { //balance | spendLimit | phonePrc | AccPrc
      isNaN(d) || 
       a === 0 || 
       b === 0 || 
-      c === 0) { //if a||b||c||d NaN OR 0 then true
+      c === 0) { //if a || b || c || d NaN OR 0 then true
     return true; 
   } else {
     return false;
