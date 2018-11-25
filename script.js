@@ -11,31 +11,32 @@ let amt = 0; //used for adding price on items etc.
 
 /* 
   NOTES: 
-    Work on calc()/calcTax() function
-    Add/use checkfunctions for while loop
-    Check function for adding accessory
-    Remove unnecessary comments after
+    Work on calc()/calcTax() function - DONE
+    Add/use checkfunctions for while loop - DONE
+    Check function for adding accessory - DONE
+    Refactor/format code - TODO/Optional
+    Remove unnecessary comments after - TODO
 */
 
 /*===================== GET INPUT OF: =======================*/
 function getBalance() { //give value to number
   const balance = document.querySelector('#balance');
-  return Number(balance.value = 2000);
+  return Number(balance.value);
 }
 
 function getSpendLmt() {
   const spendLimit = document.querySelector('#spendlimit');
-  return Number(spendLimit.value = 500);
+  return Number(spendLimit.value);
 }
 
 function getPhonePrice() {
   const phonePrice = document.querySelector('#phoneprice');
-  return Number(phonePrice.value = 160);
+  return Number(phonePrice.value);
 }
 
 function getAccPrice() {
   const accessoryPrice = document.querySelector('#accprice');
-  return Number(accessoryPrice.value = 10);
+  return Number(accessoryPrice.value);
 }
 //------------------------------------------------------------
 
@@ -43,12 +44,9 @@ function getAccPrice() {
 function keepBuyingPhone() {
   let balance = getBalance();
   let amt = checkForAccessory();
-  // for(balance; balance > amt; balance= balance -amt) {
-  //     return output.textContent = "you can buy " + Number(amt % balance) + "phones!";
-  // }
   while (balance > amt) {
-     return output.textContent = "you can buy " + Number(balance / amt).toFixed(0) + "phones!" + "at the price of " + amt.toFixed(2);
-     balance = balance - amt;
+     return output.textContent = calcSum(balance, amt); //output calcSum func
+     balance = balance - amt; //subtract amt from balance each time
   } 
 }
 //------------------------------------------------------------
@@ -59,22 +57,23 @@ function addOnAcc(a,b) {
 }
 
 function checkForAccessory() {
-  let add = addOnAcc(getPhonePrice(), getAccPrice());
-  amt = getPhonePrice();
-  debugger;
+  let addOn = addOnAcc(getPhonePrice(), getAccPrice());
+  let amt = getPhonePrice();
   if(amt < getSpendLmt()) { // phone cheap than spendlmt then we add on accssry
-     return amt = amt + add; //amt = 0 + func addOnAcc(a,b)
+     return amt = addOn; //amt = phoneprice + acc func
   } else {
-    return amt = amt + getPhonePrice(); //return just phoneprc
+    return amt = getPhonePrice(); //return just phoneprc
   }
 }
 
-function calcTax(phonePrc,accPrc) { //+ can add as string, make sure its int
-  let total = '£' + Number((phonePrc + accPrc) * tax()) .toFixed(2);
-  console.log(total);
-  return total; 
+function calcSum(a, b) { // (balance, amt) <- func gets balance divide by sum = no. of phones u can buy
+  let sumOfPhone = Number(b + b * tax()).toFixed(2); //adds tax to amount
+  return output.textContent = " you can buy " + Number(Math.floor(a/sumOfPhone)) + " phones at the price of £" + sumOfPhone;
 }
-
+// function calcTax(phonePrc,accPrc) { //+ can add as string, make sure its int
+//   let total = '£' + Number((phonePrc + accPrc) * tax()) .toFixed(2);
+//   return total; 
+// }
 function tax() {
   const TAX_RATE = 0.1;
   return TAX_RATE;
@@ -99,11 +98,18 @@ function isInputValid(a,b,c,d) { //balance | spendLimit | phonePrc | AccPrc
 function checkSpendLmt(spendlimit, phoneprc) { 
   if(spendlimit < phoneprc) { //if spend limit less than phoneprc
     return true; //too expensive
-  } else {
+  } else{
     return false;
   }
 }
 
+function checkBalance(balance, phoneprc) {
+  if(balance <= phoneprc) { // we add tax on phone e.g. 500 * 0.1 = 550, 500 - 550 = -50.00
+    return true;
+  } else {
+    return false;
+  }
+}
 //------------------------------------------------------------
 
 /*===================== OUTPUT/RESULT ======================*/
@@ -113,28 +119,25 @@ function giveOutput() { //if input is NaN for amt/phone/accessory
   let phonePrice = getPhonePrice();
   let accPrice = getAccPrice();
   
-  if(checkSpendLmt(getSpendLmt(), getPhonePrice())) {
-    return output.textContent = 'Your budget is too low';
+  if(checkBalance(getBalance(), getPhonePrice())) {
+    return output.textContent = 'Insufficient funds in balance!';
   }
-
+  if(checkSpendLmt(getSpendLmt(), getPhonePrice())) {
+    return output.textContent = 'Your budget is too low!';
+  }
   if(isInputValid(balance, spendLimit ,phonePrice, accPrice)) {
-    return output.textContent = 'Error! Enter valid money';
-  } // 
-    return calc(); //then input is not NaN so call calc
+    return output.textContent = 'Enter valid money!';
+  } else { 
+    return keepBuyingPhone(); //then input is not NaN so call calc
+  }
 }
 //------------------------------------------------------------
 
 /*===================== CLEAR VALUES =======================*/
-function inputLoop() {
-   const inputs = document.getElementsByTagName('input');
-   const listOfInputs = Array.from(inputs).map(arr => arr);
-   return listOfInputs;
-}
-
 function clearInputs() {
-  const values = inputLoop();
-  const clearVals = values.map(arr => arr.value = '');
-  return clearVals;
+  const inputs = document.getElementsByTagName('input'); //nodelist into array then set values to empty
+  const clearInputs = Array.from(inputs).map(arr => arr.value = ''); 
+  return clearInputs;
 }
 
 function clear() {
@@ -142,28 +145,11 @@ function clear() {
   clearInputs();
   output.textContent = 'FORM RESET!';
 }
-
-/*
-function reset() { 
-   //we're setting value from DOM itself
-   //since the cache are in their own func scope
-   //reason we can change the value is because DOM is global
-   //console.log(spendlimit); //id of DOM, not the cache in function getSpendLimit()
-   //so its spendlimit.value (accessible in global)
-   //while spendLimit.value is only in func
-  output.textContent ='';
-  balance.value = ''; //somehow input for balance is set to 0
-  spendlimit.value = ''; //does not work, goes for rest except balance
-  accprice.value = '';
-  phoneprice.value = '';
-}
-*/
-
 //------------------------------------------------------------
 
 /*===================== EVENT LISTENERS ======================*/
 taxOutput.textContent = tax();
-calcBtn.addEventListener('click', keepBuyingPhone);
+calcBtn.addEventListener('click', giveOutput);
 resetBtn.addEventListener('click', clear);
 
 // output.textContent = '£' + parseFloat(0.00);
