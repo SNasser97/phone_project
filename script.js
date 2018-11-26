@@ -15,6 +15,7 @@ let amt = 0; //used for adding price on items etc.
     Add/use checkfunctions for while loop - DONE
     Check function for adding accessory - DONE
     Refactor/format code - TODO/Optional
+    Finally merge branch to master - TODO
     Remove unnecessary comments after - TODO
 */
 
